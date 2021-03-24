@@ -8,4 +8,4 @@ class Link(models.Model):
     count = models.PositiveIntegerField(default=0, verbose_name='Redirect counter')
 
     def __str__(self):
-        return self.short_id
+        return f'{self.full_link} - {self.short_id}'

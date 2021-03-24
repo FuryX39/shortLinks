@@ -10,8 +10,11 @@ def index(request):
     short_id = ''
     form = LinkForm()
     if request.method == 'POST':
-        short_id = create_short_id()
-        Link.objects.create(full_link=request.POST.get('full_link'), short_id=short_id)
+        if Link.objects.filter(full_link=request.POST.get('full_link')):
+            short_id = Link.objects.filter(full_link=request.POST.get('full_link')).first().short_id
+        else:
+            short_id = create_short_id()
+            Link.objects.create(full_link=request.POST.get('full_link'), short_id=short_id)
 
     return render(request, 'index.html', {'form': form, 'short_id': short_id})
 
