@@ -3,9 +3,8 @@
 {% block content %}
 <form method="post">
     {% csrf_token %}<br />
-    {{ form.full_link }}<br />
-    <button type="submit">Submit</button>
-</form>
-{{ short_id }}<br />
-
+    {{ form.full_link }}<br /><br />
+    <button type="submit">Submit</button><br />
+</form><br />
+<a href="{{ request.get_full_path }}{{ short_id }}">{{ request.get_full_path }}{{ short_id }}</a>
 {% endblock %}
