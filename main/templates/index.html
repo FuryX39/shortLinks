@@ -6,5 +6,5 @@
     {{ form.full_link }}<br /><br />
     <button type="submit">Submit</button><br />
 </form><br />
-<a href="{{ request.get_full_path }}{{ short_id }}">{{ request.get_full_path }}{{ short_id }}</a>
+<a href="{{ short_id }}">127.0.0.1:8000/{{ short_id }}</a>
 {% endblock %}
