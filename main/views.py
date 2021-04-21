@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
 
@@ -11,7 +11,9 @@ def index(request):
     short_id = ''
     form = LinkForm()
     if request.method == 'POST':
-        full_link = f'http://{request.POST.get("full_link")}'
+        full_link = request.POST.get("full_link")
+        if full_link.find('http') == -1:
+            full_link = 'http://' + full_link
         if Link.objects.filter(full_link=full_link):
             short_id = Link.objects.filter(full_link=full_link).first().short_id
         else:
@@ -33,6 +35,8 @@ def create_short_id():
 def redirect_to_full(request, short_id):
 
     try:
+        Link.objects.filter(short_id=short_id).update(count=Link.objects.filter(short_id=short_id).first().count + 1)
         return redirect(Link.objects.filter(short_id=short_id).first().full_link)
     except AttributeError:
         return HttpResponse('')
+
